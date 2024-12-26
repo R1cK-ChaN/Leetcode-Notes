@@ -1,2 +1,2 @@
 # Leetcode-Notes
-Data Structure & Algorithm
+Data Structures & Algorithms
