@@ -1,3 +1,13 @@
+# 代码随想录算法训练营第三天
+## 链表第一天
+### 考点总结：
+- 链表操作节点（如add增、delete删）都需要先找前驱节点
+- 链表头没有前驱节点，可以手动定义一个dummy_head作为头节点的前驱节点，这样可将头节点视为一般节点
+- 反转链表需要三个指针pre/current/temp，pre/current两个在while循环外面，负责反转指针，temp在while循环内，负责暂存current后的节点防止丢失
+- 注意定义链表/新节点的语法，不要出现语法错误
+
+---
+
 #### 移除链表元素(dummy_head)
 [题目：Leetcode 203](https://leetcode.com/problems/remove-linked-list-elements)
 ##### 简单思路
