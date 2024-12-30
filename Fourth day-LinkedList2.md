@@ -16,8 +16,7 @@
 - current连2，1连3（2的下一个），2再连1。
 ##### 代码呈现
 ```python
-dummy_head = ListNode() # 初始化一个dummy_head节点
-dummy_head.next = head # dummy_head接到链表表头
+dummy_head = ListNode(next=head) # 初始化一个dummy_head节点接到链表表头
 current = dummy_head # current初始指向dummy_head
 # 开始遍历，current后面两个节点，两两交换
 while current.next and current.next.next: # 遍历条件：一定要保证current后面有两个节点可供交换
