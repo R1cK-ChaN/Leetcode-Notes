@@ -44,8 +44,7 @@ return dummy_head.next # return处理完成的链表头
 - 用双指针固定间隔为N+1，然后双指针区间移动到队尾，区间左侧边界即为倒数N+1个节点
 ##### 代码呈现
 ```python
-dummy_head = ListNode()
-dummy_head.next = head # 初始化dummy_head并接入链表头
+dummy_head = ListNode(next=head) # 初始化dummy_head并接入链表头
 fast = slow = dummy_head # 初始化定义双指针
 for i in range(n+1): # 先让fast往前移n+1个节点，制造宽度为n+1的双指针区间
 	fast = fast.next 
