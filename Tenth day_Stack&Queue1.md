@@ -83,7 +83,7 @@ class MyStack:
         self.que = deque() # new双端队列，记得加()
 
     def push(self, x: int) -> None:
-        self.que.append(x) 上面deque如果没有(),这里就会报错
+        self.que.append(x) # 上面deque如果没有(),这里就会报错
 
     def pop(self) -> int:
         if self.empty(): # 判断不为空
