@@ -123,7 +123,7 @@ class Solution:
             map_[nums[i]] = map_.get(nums[i], 0) + 1
             
         pri_que = [] # new一个优先队列作为小顶堆
-        for key, freq in map_.intem(): # item()可以同时返回key和value
+        for key, freq in map_.item(): # item()可以同时返回key和value
             # 插入一个元组(freq,key)到堆pri_que中
             heapq.heappush(pri_que, (freq,key)) 
             # heapq以(freq,key)第一个元素为排序依据
