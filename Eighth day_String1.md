@@ -90,13 +90,15 @@ s = input() # 构造输入
 lst = list(s) # 转为list好处理
 for i in range(len(lst)):
     if lst[i].isdigit(): # 判断该元素是否为数字
-        lst[i] = 'number'
+        lst[i] = 'number' # 修改i对应的位置元素
 print(''.join(lst)) # 转换为字符串再输出
 ```
 
 ##### 易错点
 
 - 注意IO格式，ACM的格式就像Kattis，都是要手动构造输入输出
+- 错误案例：`for i in lst:`，i 是从 lst 中取出的元素，它是不可变的（字符串）。
+    - 因此，修改 i 不会影响原始列表 lst。你应该修改 lst 中对应的位置，而不是单纯地修改 i。
 - `string.isdigit()`函数是判断元素是否只含数字
   - 如果全是数字，返回True
   - 如果不全是数字字符，返回False
