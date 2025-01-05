@@ -123,7 +123,7 @@ class Solution:
             map_[nums[i]] = map_.get(nums[i], 0) + 1
             
         pri_que = [] # new一个优先队列作为小顶堆
-        for key, freq in map_.item(): # item()可以同时返回key和value
+        for key, freq in map_.items(): # items()可以同时返回key和value
             # 插入一个元组(freq,key)到堆pri_que中
             heapq.heappush(pri_que, (freq,key)) 
             # heapq以(freq,key)第一个元素为排序依据
@@ -134,7 +134,7 @@ class Solution:
         for i in range(k-1, -1, -1): 
         # 小顶堆中的元素按频率从低到高排列，先弹出的堆顶是频率最小的元素
         # 所以result要倒序填充，for循环从第k-1个填到第0个，这样result的key的出现频率就是从大到小了
-            result[i] = heapq.heapqpop(pri_que)[1]
+            result[i] = heapq.heappop(pri_que)[1]
             # 只要元素名key，是元组第二个，即(freq,key)[1]
         return result
 ```
