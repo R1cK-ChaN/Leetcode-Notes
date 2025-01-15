@@ -4,7 +4,10 @@
 
 ### 考点总结
 
-- 
+- 翻转二叉树：交换左右节点，往左右子树递归（前序中左右）
+- 对称二叉树：对比内外侧节点是否相同，（后序）先遍历再对比，遍历时剪枝
+- 二叉树最大深度：求深度即是高度，后序左右中，左右递归，然后用max()取最大
+- 二叉树最小深度：逻辑与求最大深度相似，但是用min()之前需要判断左右子树是否为空
 
 ---
 
@@ -131,5 +134,35 @@ class Solution:
 
 ---
 
-#### 
+####  二叉树最小深度（后序遍历求最小叶节点深度）
 
+[题目：Leetcode 111](https://leetcode.com/problems/minimum-depth-of-binary-tree)
+
+##### 简单思路
+
+- 和前面求最大深度的思路相似，都是用后序遍历，以高度求深度
+- 但是不能简单粗暴地用min()
+  - 因为直接用min会把空子树的深度求进去，与题意中求**叶节点**的深度不符
+- 需要加入判断左右子树是否为空
+
+##### 代码呈现
+
+```python
+class Solution:
+    def minDepth(self, root: Optional[TreeNode]) -> int:
+        if not root: # 前面部分和求最大深度一样，用后序遍历
+            return 0
+        leftheight = self.minDepth(root.left) # 左
+        rightheight = self.minDepth(root.right) # 右
+        if root.left == None and root.right != None: # 中，但此时需要做判断
+            return 1 + rightheight # 左子树为空，右子树不空，选右子树那一边
+        if root.left != None and root.right == None:
+            return 1 + leftheight # 左子树不空，右子树为空，选左子树那边
+        return 1 + min(leftheight, rightheight) # 左右都不为空，那就选min()
+```
+
+##### 易错点
+
+- 随意用min()，导致选了空子树一侧
+- 题目的要求是要最小叶节点，也就是说不能选空子树
+- 需要加判断，排除空子树
