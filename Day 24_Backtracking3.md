@@ -4,7 +4,9 @@
 
 ### 考点总结
 
-- 
+- 复原IP地址：一串数字用三个"."分割成四串，分辨每一串是否合法
+- 子集：每一个递归节点都要收集，而且递归自动终止，不需写明
+- 子集Ⅱ：组合Ⅱ和子集的综合版，要用used树层去重
 
 ---
 
@@ -68,4 +70,79 @@ class Solution(object):
 -  `sub` 是局部变量，不影响递归的逻辑，也不需要特意回溯。
 
 ---
+#### 子集
 
+[题目：Leetcode 78](https://leetcode.com/problems/subsets)
+
+##### 简单思路
+
+- 收集数组中全部子集：之前的组合问题是在最后一层收割结果，现在是每一层都要记录
+  - 所以result不能写在递归终止条件，而是要写在最外面，每一层递归都要实行
+- 递归终止条件是`startindex == len(nums)`，不用特意写出来
+  - 因为递归达到这个地步for循环会自动终止，而且收获结果环节也不在这里面
+
+##### 代码呈现
+
+`````python
+class Solution(object):
+    def backtracking(self, nums, startindex, path, result):
+        result.append(path[:]) # 每次递归result都要收集结果
+        for i in range(startindex, len(nums)):
+            path.append(nums[i])
+            self.backtracking(nums, i+1, path, result) # 从i+1之后开始，为了不重复
+            path.pop() # 经典回溯
+        return # 不用特意写终止条件，递归自动终止
+            
+    def subsets(self, nums):
+        result = []
+        self.backtracking(nums, 0, [], result)
+        return result
+`````
+
+##### 易错点
+
+- 虽然不用特意写终止条件，但最后还是得return
+- 这里的子集是需要每一次递归都要收集，和组合问题不太一样
+
+---
+
+#### 子集Ⅱ
+
+[题目：Leetcode 90](https://leetcode.com/problems/subsets-ii)
+
+##### 简单思路
+
+- 这道题就是组合Ⅱ+子集的结合，nums数组中有多个相同的元素
+- 把树层剪枝和子集结合，用used应对树层剪枝，每一个递归都要收集结果
+- 当`used[i-1] == False`的时候，说明`used[i]`与`used[i-1]`是在同一层
+  - 如果不在同一层的话，要先经过i-1，`used[i-1] == True`
+- 如果同一层`nums[i-1] == nums[i]`，需要跳过（去重剪枝）
+
+##### 代码呈现
+
+`````python
+class Solution(object):
+    def backtracking(self, nums, startindex, used, path, result):
+    	result.append(path[:]) # 每一次递归都要收集结果
+        for i in range(startindex, len(nums)):
+            if i > startindex and nums[i-1] == nums[i] and not used[i-1]:
+                continue # 如果是树层第二个及以后的元素，和前一个元素相同，而且同层前一个元素没用过——跳过
+            path.append(nums[i])
+            used[i] = True
+            self.backtracking(nums, i+1, used, path, result)
+            used[i] = False # 经典回溯
+            path.pop()
+        return
+        
+    def subsetsWithDup(self, nums):
+        result = []
+        used = [False]*len(nums) # used记录前一个元素状态，看是否在同一层
+        nums.sort() # 一定要先排序，不排序做不了
+        self.backtracking(nums, 0, used, [], result)
+        return result
+`````
+
+##### 易错点
+
+- 这道题两个考点，树层去重+收集子集
+- 回想组合Ⅱ的逻辑，用used分辨和前一个数是否处在同一递归层
